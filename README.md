@@ -1,4 +1,4 @@
-# 🛠️ Calculadora Técnica Nexus
+# 🛠️ Calculadora Técnica
 
 Uma ferramenta web moderna e intuitiva projetada para auxiliar profissionais de usinagem e mecânica de precisão nos cálculos de coordenadas para peças **Sextavadas** e **Quadradas**.
 

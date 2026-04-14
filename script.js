@@ -75,6 +75,36 @@ function calcular() {
     poly.setAttribute('points', pontos.trim());
 }
 
+// Listener para o botão de instalação PWA
+let deferredPrompt;
+const botaoInstalar = document.getElementById('botaoInstalar');
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    botaoInstalar.style.display = 'block';
+});
+
+botaoInstalar.addEventListener('click', async () => {
+    if (deferredPrompt !== null) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+            console.log('O usuário aceitou a instalação PWA.');
+        } else {
+            console.log('O usuário cancelou a instalação PWA.');
+        }
+        deferredPrompt = null;
+        botaoInstalar.style.display = 'none';
+    }
+});
+
+// Escuta o evento de sucesso qwuando a instalação é concluída
+window.addEventListener('appinstalled', () => {
+    botaoInstalar.style.display = 'none';
+    deferredPrompt = null;
+    console.log('PWA instalada com sucesso!');
+});
+
 // Listeners para atualização em tempo real
 [inputDiametro, selectForma, selectTipo].forEach(el => {
     el.addEventListener('input', calcular);

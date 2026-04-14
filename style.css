@@ -19,12 +19,12 @@ body {
     font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     background: radial-gradient(circle at top left, #0f172a, #020617);
     color: var(--text-primary);
-    min-height: 100vh;
+    height: 100vh;
+    height: 100dvh; /* Suporte para navegadores mobile modernos */
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding: 40px 20px;
+    overflow: hidden;
 }
 
 .glass {
@@ -37,18 +37,40 @@ body {
 }
 
 .container {
-    padding: 40px;
+    padding: 2rem;
     max-width: 1000px;
     width: 100%;
+    max-height: 95vh;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
 }
 
 header {
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 1.5rem;
+    flex-shrink: 0;
+}
+
+button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 10px 16px;
+    background: var(--color-green);
+    color: var(--text-primary);
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.3s, box-shadow 0.3s;
 }
 
 h1 {
-    font-weight: 300; letter-spacing: 2px;
+    font-weight: 300; 
+    letter-spacing: 2px;
+    font-size: clamp(1.2rem, 4vw, 2rem);
+    margin-bottom: 0.5rem;
 }
 
 .highlight {
@@ -57,14 +79,21 @@ h1 {
 
 .main-content {
     display: flex;
-    gap: 40px;
+    gap: 2rem;
     flex-wrap: wrap;
     align-items: flex-start;
+    overflow-y: auto;
+    padding-right: 5px; /* Espaço para a scrollbar */
 }
+
+/* Custom Scrollbar para manter o estilo Glass */
+.main-content::-webkit-scrollbar { width: 6px; }
+.main-content::-webkit-scrollbar-track { background: transparent; }
+.main-content::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 10px; }
 
 .controls { flex: 1; min-width: 300px; }
 
-.input-group { margin-bottom: 25px; }
+.input-group { margin-bottom: 1.2rem; }
 
 label {
     display: block;
@@ -112,7 +141,7 @@ select:focus, input:focus {
 }
 
 .result-card span {
-    font-size: 0.7rem; color: var(--text-secondary); display: block;
+    font-size: 0.65rem; color: var(--text-secondary); display: block;
 }
 
 .result-card strong {
@@ -132,13 +161,15 @@ select:focus, input:focus {
 .visualizer {
     background: rgba(0, 0, 0, 0.4);
     border-radius: 20px;
-    padding: 40px; /* Aumentado o padding interno para garantir que o texto não encoste na borda */
+    padding: 20px;
     border: 1px solid var(--glass-border);
-    width: 100%;
+    flex: 1;
+    min-width: 300px;
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    max-height: 450px;
 }
 
 #renderer {
@@ -149,7 +180,8 @@ select:focus, input:focus {
 }
 
 footer {
-    margin-top: 40px;
+    padding: 1rem;
+    flex-shrink: 0;
     text-align: center;
     color: var(--text-secondary);
     font-size: 0.9rem;
@@ -173,11 +205,14 @@ footer {
     .main-content {
         flex-direction: column;
         align-items: center;
+        overflow-y: auto;
     }
 
     .controls {
         width: 100%;
     }
+    
+    .visualizer { width: 100%; }
 
     .container {
         padding: 20px;

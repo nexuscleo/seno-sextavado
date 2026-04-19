@@ -84,17 +84,50 @@ function calcular() {
     poly.setAttribute('points', pontos.trim());
 }
 
-// Listener para o botão de instalação PWA
+// Elementos do Menu
+const botaoMenu = document.getElementById('botaoMenu');
+const dropdownMenu = document.getElementById('dropdownMenu');
+const menuInstalar = document.getElementById('menuInstalar');
+const menuComoUsar = document.getElementById('menuComoUsar');
+
+// Toggle do Menu
+botaoMenu.addEventListener('click', (e) => {
+    e.stopPropagation();
+    dropdownMenu.classList.toggle('show');
+});
+
+// Fechar menu ao clicar fora
+window.addEventListener('click', () => {
+    if (dropdownMenu.classList.contains('show')) {
+        dropdownMenu.classList.remove('show');
+    }
+});
+
+// Ação do Como Usar
+menuComoUsar.addEventListener('click', (e) => {
+    e.preventDefault();
+    alert("Insira a medida, selecione a forma e o tipo de usinagem. O app calculará o raio real e as coordenadas X e Y para o centro de usinagem.");
+    dropdownMenu.classList.remove('show');
+});
+
+// Listener para a instalação PWA
 let deferredPrompt;
-const botaoInstalar = document.getElementById('botaoInstalar');
+// Esconde a opção de instalar inicialmente, aguardando o evento do navegador
+menuInstalar.style.display = 'none';
+
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
-    botaoInstalar.style.display = 'block';
+    // Só exibe a opção de instalar se não estiver rodando como standalone (já instalado)
+    if (!window.matchMedia('(display-mode: standalone)').matches) {
+        menuInstalar.style.display = 'block';
+    }
 });
 
-botaoInstalar.addEventListener('click', async () => {
-    if (deferredPrompt !== null) {
+menuInstalar.addEventListener('click', async (e) => {
+    e.preventDefault();
+    dropdownMenu.classList.remove('show');
+    if (deferredPrompt) {
         deferredPrompt.prompt();
         const { outcome } = await deferredPrompt.userChoice;
         if (outcome === 'accepted') {
@@ -103,16 +136,21 @@ botaoInstalar.addEventListener('click', async () => {
             console.log('O usuário cancelou a instalação PWA.');
         }
         deferredPrompt = null;
-        botaoInstalar.style.display = 'none';
+        menuInstalar.style.display = 'none';
     }
 });
 
 // Escuta o evento de sucesso quando a instalação é concluída
 window.addEventListener('appinstalled', () => {
-    botaoInstalar.style.display = 'none';
+    menuInstalar.style.display = 'none';
     deferredPrompt = null;
     console.log('PWA instalada com sucesso!');
 });
+
+// Oculta opção caso abra diretamente no modo standalone
+if (window.matchMedia('(display-mode: standalone)').matches) {
+    menuInstalar.style.display = 'none';
+}
 
 // Listeners para atualização em tempo real
 [inputDiametro, selectForma, selectTipo].forEach(el => {

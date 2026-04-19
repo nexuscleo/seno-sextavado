@@ -287,12 +287,10 @@ footer {
         overflow-y: auto;
     }
 
-    .controls {
-        width: 100%;
-    }
-
+    .controls,
     .visualizer {
         width: 100%;
+        min-width: 0;
     }
 
     .container {

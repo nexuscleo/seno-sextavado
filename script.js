@@ -8,7 +8,7 @@ const labelsContainer = document.getElementById('labels');
  * Raio utilizado visualmente no SVG para manter o desenho em uma escala confortável
  * @type {number}
  */
-const RAIO_VISUAL = 110;
+const RAIO_VISUAL = 80;
 
 /**
  * Calcula os parâmetros geométricos (seno, cosseno e raio real)

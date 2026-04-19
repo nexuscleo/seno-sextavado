@@ -4,8 +4,17 @@ const selectTipo = document.getElementById('tipo');
 const poly = document.getElementById('hexagono');
 const labelsContainer = document.getElementById('labels');
 
-const RAIO_VISUAL = 110; // Reduzido ligeiramente para dar espaço às etiquetas nas bordas
+/**
+ * Raio utilizado visualmente no SVG para manter o desenho em uma escala confortável
+ * @type {number}
+ */
+const RAIO_VISUAL = 110;
 
+/**
+ * Calcula os parâmetros geométricos (seno, cosseno e raio real)
+ * com base no diâmetro, forma e tipo de usinagem.
+ * Atualiza os valores na interface e redesenha a representação no SVG.
+ */
 function calcular() {
     const d = parseFloat(inputDiametro.value) || 0;
     const lados = parseInt(selectForma.value);
@@ -98,7 +107,7 @@ botaoInstalar.addEventListener('click', async () => {
     }
 });
 
-// Escuta o evento de sucesso qwuando a instalação é concluída
+// Escuta o evento de sucesso quando a instalação é concluída
 window.addEventListener('appinstalled', () => {
     botaoInstalar.style.display = 'none';
     deferredPrompt = null;
@@ -115,3 +124,15 @@ document.getElementById('currentYear').textContent = new Date().getFullYear();
 
 // Cálculo inicial
 calcular();
+
+/**
+ * Registra o Service Worker para habilitar funcionalidades PWA offline
+ * e permitir que o evento beforeinstallprompt seja disparado.
+ */
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+            .then(reg => console.log('Service Worker registrado com sucesso:', reg.scope))
+            .catch(err => console.error('Falha ao registrar Service Worker:', err));
+    });
+}

@@ -1,0 +1,21 @@
+{
+  "name": "Calculadora de Sextavado",
+  "short_name": "CalcSextavado",
+  "description": "Calculadora técnica para geometria de usinagem de precisão.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#020617",
+  "theme_color": "#0f172a",
+  "icons": [
+    {
+      "src": "./img/icon-calculator.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./img/icon-calculator.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

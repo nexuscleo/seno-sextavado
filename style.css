@@ -198,6 +198,7 @@ footer {
 #hexagono {
     stroke: var(--color-blue);
     filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.5));
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Responsividade */

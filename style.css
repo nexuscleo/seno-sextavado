@@ -20,7 +20,8 @@ body {
     background: radial-gradient(circle at top left, #0f172a, #020617);
     color: var(--text-primary);
     height: 100vh;
-    height: 100dvh; /* Suporte para navegadores mobile modernos */
+    height: 100dvh;
+    /* Suporte para navegadores mobile modernos */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -67,14 +68,15 @@ button {
 }
 
 h1 {
-    font-weight: 300; 
+    font-weight: 300;
     letter-spacing: 2px;
     font-size: clamp(1.2rem, 4vw, 2rem);
     margin-bottom: 0.5rem;
 }
 
 .highlight {
-    color: var(--color-green); font-weight: 800;
+    color: var(--color-green);
+    font-weight: 800;
 }
 
 .main-content {
@@ -83,17 +85,32 @@ h1 {
     flex-wrap: wrap;
     align-items: flex-start;
     overflow-y: auto;
-    padding-right: 5px; /* Espaço para a scrollbar */
+    padding-right: 5px;
+    /* Espaço para a scrollbar */
 }
 
 /* Custom Scrollbar para manter o estilo Glass */
-.main-content::-webkit-scrollbar { width: 6px; }
-.main-content::-webkit-scrollbar-track { background: transparent; }
-.main-content::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 10px; }
+.main-content::-webkit-scrollbar {
+    width: 6px;
+}
 
-.controls { flex: 1; min-width: 300px; }
+.main-content::-webkit-scrollbar-track {
+    background: transparent;
+}
 
-.input-group { margin-bottom: 1.2rem; }
+.main-content::-webkit-scrollbar-thumb {
+    background: var(--glass-border);
+    border-radius: 10px;
+}
+
+.controls {
+    flex: 1;
+    min-width: 300px;
+}
+
+.input-group {
+    margin-bottom: 1.2rem;
+}
 
 label {
     display: block;
@@ -104,7 +121,8 @@ label {
     letter-spacing: 1px;
 }
 
-select, input {
+select,
+input {
     width: 100%;
     padding: 14px;
     background: rgba(0, 0, 0, 0.3);
@@ -115,7 +133,8 @@ select, input {
     transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-select:focus, input:focus {
+select:focus,
+input:focus {
     outline: none;
     border-color: var(--color-blue);
     box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
@@ -141,11 +160,14 @@ select:focus, input:focus {
 }
 
 .result-card span {
-    font-size: 0.65rem; color: var(--text-secondary); display: block;
+    font-size: 0.65rem;
+    color: var(--text-secondary);
+    display: block;
 }
 
 .result-card strong {
-    font-size: 1.3rem; color: var(--color-green);
+    font-size: 1.3rem;
+    color: var(--color-green);
 }
 
 .highlight-card {
@@ -155,7 +177,8 @@ select:focus, input:focus {
 }
 
 .highlight-card strong {
-    font-size: 2.2rem; color: var(--color-blue);
+    font-size: 2.2rem;
+    color: var(--color-blue);
 }
 
 .visualizer {
@@ -176,7 +199,8 @@ select:focus, input:focus {
     display: block;
     max-width: 100%;
     height: auto;
-    overflow: visible; /* Permite que o texto "saia" ligeiramente do viewBox sem ser cortado */
+    overflow: visible;
+    /* Permite que o texto "saia" ligeiramente do viewBox sem ser cortado */
 }
 
 footer {
@@ -212,8 +236,10 @@ footer {
     .controls {
         width: 100%;
     }
-    
-    .visualizer { width: 100%; }
+
+    .visualizer {
+        width: 100%;
+    }
 
     .container {
         padding: 20px;

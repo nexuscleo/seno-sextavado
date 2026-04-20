@@ -137,9 +137,9 @@ menuComoUsar.addEventListener('click', async (e) => {
         let texto = await response.text();
 
         // Adiciona a versão no final do texto
-        texto += `\n\n-------------------\nVersão: 1.0.1`;
+        const versaoFinal = `\n\n-------------------\nVersão 1.0.1`;
 
-        conteudoTexto.innerText = texto;
+        conteudoTexto.innerText = texto + versaoFinal;
         modalInfo.style.display = 'flex';
     } catch (error) {
         conteudoTexto.innerText = "Erro ao carregar instruções. Verifique o arquivo info.txt.";

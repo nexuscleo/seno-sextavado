@@ -140,7 +140,7 @@ header {
 }
 
 .btn-fechar-modal {
-    background: var(--color-blue);
+    background: var(--color-green);
     color: white;
     border: none;
     padding: 12px 24px;
@@ -149,6 +149,10 @@ header {
     font-weight: bold;
     transition: transform 0.2s, background 0.2s;
     align-self: flex-end;
+}
+
+#conteudoTexto {
+    white-space: pre-line;
 }
 
 .btn-fechar-modal:hover {
@@ -377,7 +381,7 @@ footer {
 
     header {
         margin-bottom: 0.5rem;
-        ;
+        padding: 50px;
     }
 
     h1 {

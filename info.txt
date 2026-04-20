@@ -1,7 +1,23 @@
-Cálculo Dinâmico: Suporte para usinagem interna (medida entre faces) e externa (diâmetro nos vértices).
-Visualização SVG: Representação gráfica estática da peça com plotagem automática das coordenadas (X, Y) em cada vértice.
-Trigonometria Instantânea: Exibição de valores de Seno e Cosseno baseados na geometria selecionada.
-Interface Premium: Design moderno utilizando a técnica de Glassmorphism, com temas em tons de azul, verde e vermelho.
-Totalmente Responsivo: Adaptado para uso em desktops, tablets e smartphones (chão de fábrica).
-Modo Offline: Funciona sem conexão com a internet.
-PWA (Progressive Web App): Instale o atalho na tela inicial do seu dispositivo.
+Passo a Passo para Utilização:
+Seleção da Forma: No campo "Forma Geométrica", escolha se deseja calcular um Sextavado (6 lados) ou um Quadrado (4 lados).
+
+Tipo de Usinagem:
+
+Externa: Utilize esta opção quando o diâmetro nominal da peça tocar os vértices (pontas) do polígono.
+
+Interna: Utilize esta opção quando o diâmetro nominal tocar as faces planas (apótema), comum em fresamento de sextavados internos ou alojamentos.
+
+Inserção de Medida: Digite o valor em milímetros no campo "Medida entre Arestas/Faces". O cálculo é processado em tempo real.
+
+Análise de Resultados:
+
+Seno/Cosseno: Valores trigonométricos aplicados ao ângulo de divisão.
+
+Raio Real: O raio exato que a ferramenta deve percorrer em relação ao centro.
+
+Coordenadas (Visualizador): Observe o gráfico dinâmico. Ele exibe os pontos X e Y exatos para cada vértice, facilitando a programação manual ou conferência de código G.
+
+Recursos Adicionais:
+Instalação: Para acessar a calculadora offline e sem navegador, abra o menu lateral em seu dispositivo móvel e clique em "Instalar".
+
+Interface Adaptável: O layout se ajusta automaticamente para uso em tablets ou smartphones no chão de fábrica.

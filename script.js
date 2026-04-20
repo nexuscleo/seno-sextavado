@@ -1,15 +1,40 @@
+/**
+ * Calculadora de Sextavado e Quadrado
+ * Geometria de Usinagem de Precisão
+ */
+
+// ============================================================================
+// Elementos DOM
+// ============================================================================
 const inputDiametro = document.getElementById('diametro');
 const selectForma = document.getElementById('forma');
 const selectTipo = document.getElementById('tipo');
 const poly = document.getElementById('hexagono');
 const labelsContainer = document.getElementById('labels');
 
+const botaoMenu = document.getElementById('botaoMenu');
+const dropdownMenu = document.getElementById('dropdownMenu');
+const menuInstalar = document.getElementById('menuInstalar');
+const menuComoUsar = document.getElementById('menuComoUsar');
+
+const modalInfo = document.getElementById('modalInfo');
+const conteudoTexto = document.getElementById('conteudoTexto');
+const btnFecharModal = document.getElementById('btnFecharModal');
+const currentYear = document.getElementById('currentYear');
+
+// ============================================================================
+// Constantes e Variáveis Globais
+// ============================================================================
 /**
  * Raio utilizado visualmente no SVG para manter o desenho em uma escala confortável
  * @type {number}
  */
 const RAIO_VISUAL = 80;
+let deferredPrompt;
 
+// ============================================================================
+// Lógica Principal (Cálculos Geométricos)
+// ============================================================================
 /**
  * Calcula os parâmetros geométricos (seno, cosseno e raio real)
  * com base no diâmetro, forma e tipo de usinagem.
@@ -84,32 +109,62 @@ function calcular() {
     poly.setAttribute('points', pontos.trim());
 }
 
-// Elementos Adicionais
-const modalInfo = document.getElementById('modalInfo');
-const conteudoTexto = document.getElementById('conteudoTexto');
+// ============================================================================
+// Eventos de Interface (Menu, Modal, Inputs)
+// ============================================================================
 
-// 1. Animação do Botão Hambúrguer e Menu
+// Interações do Menu Hambúrguer
 botaoMenu.addEventListener('click', (e) => {
     e.stopPropagation();
     const isOpen = dropdownMenu.classList.toggle('show');
-    botaoMenu.classList.toggle('open', isOpen); // Adiciona/remove classe para animação
+    botaoMenu.classList.toggle('open', isOpen);
 });
 
-// Ajuste no clique fora para resetar o botão
+// Fechar menu ao clicar fora
 window.addEventListener('click', () => {
     dropdownMenu.classList.remove('show');
     botaoMenu.classList.remove('open');
 });
 
-// 2. Lógica PWA (Instalação)
-let deferredPrompt;
-// Escondido por padrão
+// Exibir Modal de Ajuda
+menuComoUsar.addEventListener('click', async (e) => {
+    e.preventDefault();
+    dropdownMenu.classList.remove('show');
+    botaoMenu.classList.remove('open');
+
+    try {
+        const response = await fetch('info.txt');
+        let texto = await response.text();
+        const versaoFinal = `\n\n-------------------\nVersão 1.0.1`;
+        conteudoTexto.innerText = texto + versaoFinal;
+        modalInfo.style.display = 'flex';
+    } catch (error) {
+        conteudoTexto.innerText = "Erro ao carregar instruções. Verifique o arquivo info.txt.";
+        modalInfo.style.display = 'flex';
+    }
+});
+
+// Fechar Modal
+function fecharModal() {
+    modalInfo.style.display = 'none';
+}
+
+btnFecharModal.addEventListener('click', fecharModal);
+
+// Atualização em tempo real (Inputs)
+[inputDiametro, selectForma, selectTipo].forEach(el => {
+    el.addEventListener('input', calcular);
+});
+
+// ============================================================================
+// Lógica PWA (Progressive Web App)
+// ============================================================================
+
+// Ocultar opção de instalação por padrão
 menuInstalar.style.display = 'none';
 
 window.addEventListener('beforeinstallprompt', (e) => {
-    // Detecta se é dispositivo móvel (Android/iOS)
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
     if (isMobile) {
         e.preventDefault();
         deferredPrompt = e;
@@ -126,32 +181,6 @@ menuInstalar.addEventListener('click', async () => {
     }
 });
 
-// 3. Função "Como Usar" - Lendo arquivo .txt
-menuComoUsar.addEventListener('click', async (e) => {
-    e.preventDefault();
-    dropdownMenu.classList.remove('show');
-    botaoMenu.classList.remove('open');
-
-    try {
-        const response = await fetch('info.txt');
-        let texto = await response.text();
-
-        // Adiciona a versão no final do texto
-        const versaoFinal = `\n\n-------------------\nVersão 1.0.1`;
-
-        conteudoTexto.innerText = texto + versaoFinal;
-        modalInfo.style.display = 'flex';
-    } catch (error) {
-        conteudoTexto.innerText = "Erro ao carregar instruções. Verifique o arquivo info.txt.";
-        modalInfo.style.display = 'flex';
-    }
-});
-
-function fecharModal() {
-    modalInfo.style.display = 'none';
-}
-
-// Escuta o evento de sucesso quando a instalação é concluída
 window.addEventListener('appinstalled', () => {
     menuInstalar.style.display = 'none';
     deferredPrompt = null;
@@ -163,20 +192,8 @@ if (window.matchMedia('(display-mode: standalone)').matches) {
     menuInstalar.style.display = 'none';
 }
 
-// Listeners para atualização em tempo real
-[inputDiametro, selectForma, selectTipo].forEach(el => {
-    el.addEventListener('input', calcular);
-});
-
-// Atualizar ano no rodapé
-document.getElementById('currentYear').textContent = new Date().getFullYear();
-
-// Cálculo inicial
-calcular();
-
 /**
- * Registra o Service Worker para habilitar funcionalidades PWA offline
- * e permitir que o evento beforeinstallprompt seja disparado.
+ * Registra o Service Worker
  */
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
@@ -185,3 +202,15 @@ if ('serviceWorker' in navigator) {
             .catch(err => console.error('Falha ao registrar Service Worker:', err));
     });
 }
+
+// ============================================================================
+// Inicialização
+// ============================================================================
+
+// Atualizar ano dinâmico no rodapé
+if (currentYear) {
+    currentYear.textContent = new Date().getFullYear();
+}
+
+// Executar cálculo inicial ao carregar a página
+calcular();

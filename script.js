@@ -137,7 +137,7 @@ menuComoUsar.addEventListener('click', async (e) => {
         let texto = await response.text();
 
         // Adiciona a versão no final do texto
-        texto += `\n\n-------------------\nVersão: 1.0.0`;
+        texto += `\n\n-------------------\nVersão: 1.0.1`;
 
         conteudoTexto.innerText = texto;
         modalInfo.style.display = 'flex';

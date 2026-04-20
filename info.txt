@@ -3,3 +3,5 @@ Visualização SVG: Representação gráfica estática da peça com plotagem aut
 Trigonometria Instantânea: Exibição de valores de Seno e Cosseno baseados na geometria selecionada.
 Interface Premium: Design moderno utilizando a técnica de Glassmorphism, com temas em tons de azul, verde e vermelho.
 Totalmente Responsivo: Adaptado para uso em desktops, tablets e smartphones (chão de fábrica).
+Modo Offline: Funciona sem conexão com a internet.
+PWA (Progressive Web App): Instale o atalho na tela inicial do seu dispositivo.

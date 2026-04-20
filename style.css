@@ -170,7 +170,7 @@ header {
     position: absolute;
     right: 0;
     top: 35px;
-    background: var(--glass-bg);
+    background: var(--color-blue);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--glass-border);

@@ -1,0 +1,5 @@
+Cálculo Dinâmico: Suporte para usinagem interna (medida entre faces) e externa (diâmetro nos vértices).
+Visualização SVG: Representação gráfica estática da peça com plotagem automática das coordenadas (X, Y) em cada vértice.
+Trigonometria Instantânea: Exibição de valores de Seno e Cosseno baseados na geometria selecionada.
+Interface Premium: Design moderno utilizando a técnica de Glassmorphism, com temas em tons de azul, verde e vermelho.
+Totalmente Responsivo: Adaptado para uso em desktops, tablets e smartphones (chão de fábrica).

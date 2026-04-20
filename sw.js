@@ -1,4 +1,4 @@
-const CACHE_NAME = 'calc-sextavado-v1.1.0';
+const CACHE_NAME = 'calc-sextavado-v1.0.1';
 const urlsToCache = [
   './',
   './index.html',

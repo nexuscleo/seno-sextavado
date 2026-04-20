@@ -23,7 +23,7 @@ function calcular() {
     // Cálculos trigonométricos baseados na geometria
     const anguloPasso = (360 / lados) * Math.PI / 180;
     const anguloMeio = anguloPasso / 2;
-    
+
     document.getElementById('valSeno').textContent = Math.sin(anguloMeio).toFixed(4);
     document.getElementById('valCosseno').textContent = Math.cos(anguloMeio).toFixed(4);
 
@@ -52,7 +52,7 @@ function calcular() {
         // Ângulo base distribuído pelos lados + a rotação específica da forma
         const anguloDeg = (i * (360 / lados)) + rotacaoBase;
         const anguloRad = anguloDeg * Math.PI / 180;
-        
+
         // Coordenadas para o desenho (estáticas)
         const x_vis = 200 + RAIO_VISUAL * Math.cos(anguloRad);
         const y_vis = 200 + RAIO_VISUAL * Math.sin(anguloRad);
@@ -64,7 +64,7 @@ function calcular() {
 
         // Adicionar label de coordenada no SVG
         const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
-        
+
         // Alinhamento inteligente baseado na posição do ponto
         if (Math.abs(x_vis - 200) < 1) {
             label.setAttribute("text-anchor", "middle");
@@ -76,7 +76,7 @@ function calcular() {
 
         // Ajuste vertical para não sobrepor a linha
         label.setAttribute("y", y_vis > 200 ? y_vis + 22 : y_vis - 12);
-        
+
         label.textContent = `X:${x_real.toFixed(2)} Y:${y_real.toFixed(2)}`;
         labelsContainer.appendChild(label);
     }
@@ -84,61 +84,72 @@ function calcular() {
     poly.setAttribute('points', pontos.trim());
 }
 
-// Elementos do Menu
-const botaoMenu = document.getElementById('botaoMenu');
-const dropdownMenu = document.getElementById('dropdownMenu');
-const menuInstalar = document.getElementById('menuInstalar');
-const menuComoUsar = document.getElementById('menuComoUsar');
+// Elementos Adicionais
+const modalInfo = document.getElementById('modalInfo');
+const conteudoTexto = document.getElementById('conteudoTexto');
 
-// Toggle do Menu
+// 1. Animação do Botão Hambúrguer e Menu
 botaoMenu.addEventListener('click', (e) => {
     e.stopPropagation();
-    dropdownMenu.classList.toggle('show');
+    const isOpen = dropdownMenu.classList.toggle('show');
+    botaoMenu.classList.toggle('open', isOpen); // Adiciona/remove classe para animação
 });
 
-// Fechar menu ao clicar fora
+// Ajuste no clique fora para resetar o botão
 window.addEventListener('click', () => {
-    if (dropdownMenu.classList.contains('show')) {
-        dropdownMenu.classList.remove('show');
-    }
-});
-
-// Ação do Como Usar
-menuComoUsar.addEventListener('click', (e) => {
-    e.preventDefault();
-    alert("Insira a medida, selecione a forma e o tipo de usinagem. O app calculará o raio real e as coordenadas X e Y para o centro de usinagem.");
     dropdownMenu.classList.remove('show');
+    botaoMenu.classList.remove('open');
 });
 
-// Listener para a instalação PWA
+// 2. Lógica PWA (Instalação)
 let deferredPrompt;
-// Esconde a opção de instalar inicialmente, aguardando o evento do navegador
+// Escondido por padrão
 menuInstalar.style.display = 'none';
 
 window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    // Só exibe a opção de instalar se não estiver rodando como standalone (já instalado)
-    if (!window.matchMedia('(display-mode: standalone)').matches) {
+    // Detecta se é dispositivo móvel (Android/iOS)
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+    if (isMobile) {
+        e.preventDefault();
+        deferredPrompt = e;
         menuInstalar.style.display = 'block';
     }
 });
 
-menuInstalar.addEventListener('click', async (e) => {
-    e.preventDefault();
-    dropdownMenu.classList.remove('show');
+menuInstalar.addEventListener('click', async () => {
     if (deferredPrompt) {
         deferredPrompt.prompt();
         const { outcome } = await deferredPrompt.userChoice;
-        if (outcome === 'accepted') {
-            console.log('O usuário aceitou a instalação PWA.');
-        } else {
-            console.log('O usuário cancelou a instalação PWA.');
-        }
+        if (outcome === 'accepted') menuInstalar.style.display = 'none';
         deferredPrompt = null;
-        menuInstalar.style.display = 'none';
     }
 });
+
+// 3. Função "Como Usar" - Lendo arquivo .txt
+menuComoUsar.addEventListener('click', async (e) => {
+    e.preventDefault();
+    dropdownMenu.classList.remove('show');
+    botaoMenu.classList.remove('open');
+
+    try {
+        const response = await fetch('info.txt');
+        let texto = await response.text();
+
+        // Adiciona a versão no final do texto
+        texto += `\n\n-------------------\nVersão: 1.0.0`;
+
+        conteudoTexto.innerText = texto;
+        modalInfo.style.display = 'flex';
+    } catch (error) {
+        conteudoTexto.innerText = "Erro ao carregar instruções. Verifique o arquivo info.txt.";
+        modalInfo.style.display = 'flex';
+    }
+});
+
+function fecharModal() {
+    modalInfo.style.display = 'none';
+}
 
 // Escuta o evento de sucesso quando a instalação é concluída
 window.addEventListener('appinstalled', () => {

@@ -100,7 +100,8 @@ header {
     flex-direction: column;
 }
 
-.dropdown-content a, .dropdown-content .menu-version {
+.dropdown-content a,
+.dropdown-content .menu-version {
     color: var(--text-primary);
     padding: 12px 16px;
     text-decoration: none;
@@ -245,13 +246,14 @@ input:focus {
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
-    max-height: 450px;
+    min-height: 0;
 }
 
 #renderer {
     display: block;
     max-width: 100%;
+    max-height: 100%;
+    width: auto;
     height: auto;
     overflow: visible;
     /* Permite que o texto "saia" ligeiramente do viewBox sem ser cortado */
@@ -281,10 +283,27 @@ footer {
 
 /* Responsividade */
 @media (max-width: 900px) {
+    .container {
+        padding: 15px;
+        max-height: 100dvh;
+        border-radius: 0;
+        border: none;
+    }
+
+    header {
+        margin-bottom: 0.5rem;
+        ;
+    }
+
+    h1 {
+        font-size: 1.2rem;
+    }
+
     .main-content {
         flex-direction: column;
-        align-items: center;
-        overflow-y: auto;
+        align-items: stretch;
+        overflow: hidden;
+        gap: 10px;
     }
 
     .controls,
@@ -293,18 +312,53 @@ footer {
         min-width: 0;
     }
 
-    .container {
-        padding: 20px;
+    .controls {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .controls .inputgroup:nth-child(3) {
+        grid-column: span 2;
+        margin-bottom: 0;
+    }
+
+    .input-group {
+        margin-bottom: 0;
+    }
+
+    label {
+        margin-bottom: 5px;
+    }
+
+    select,
+    input {
+        padding: 10px;
+    }
+
+    .results-grid {
+        margin-top: 10px;
+        grid-column: span 2;
+        gap: 10px;
+    }
+
+    .visualizer {
+        padding: 10px;
     }
 }
 
 @media (max-width: 480px) {
     .results-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
     }
 
-    h1 {
-        font-size: 1.5rem;
+    .result-card {
+        padding: 10px;
+    }
+
+    .highlight-card {
+        grid-column: span2;
+        ;
     }
 
     .highlight-card strong {

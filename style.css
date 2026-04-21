@@ -387,7 +387,7 @@ footer {
     line-height: 1.6;
 }
 
-.highlight-alt {
+.highlight-alt span {
     color: var(--color-ciano);
     font-weight: bold;
     text-transform: uppercase;
